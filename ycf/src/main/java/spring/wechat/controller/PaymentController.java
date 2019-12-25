@@ -1,6 +1,7 @@
 package spring.wechat.controller;
 
 import io.swagger.annotations.ApiParam;
+import spring.annotation.LoginRequired;
 import spring.config.redis.util.RedisLockUtil;
 import spring.dto.BaseCommonResult;
 import spring.enums.UserErrorCodeEnum;
@@ -65,6 +66,7 @@ public class PaymentController {
     @ApiOperation(value = "下单接口", httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value="toPay", method= RequestMethod.POST)
+    @LoginRequired
     public BaseCommonResult toPay(@RequestBody PayReq req) throws Exception {
 
         List<POrders> orderInfo = orderService.getOrder(req);

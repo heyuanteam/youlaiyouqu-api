@@ -86,7 +86,7 @@ public class MemberService {
         try {
             token = JWT.create()
                     .withAudience(String.valueOf(userMember.getId()))          // 将 Id 保存到 token 里面
-                    .sign(Algorithm.HMAC256(userMember.getPassWord()));   // 以 密码 作为 token 的密钥
+                    .sign(Algorithm.HMAC256(userMember.getAppId()));   // 以 密码 作为 token 的密钥
             result.setToken(token);
             result.setOldToken(token);
         } catch (UnsupportedEncodingException ignore) {
@@ -121,8 +121,11 @@ public class MemberService {
         MemberLoginResponse result = new MemberLoginResponse();
         UUserMemberExample example = new UUserMemberExample();
         example.createCriteria().andAppIdEqualTo(record.getAppId());
+        log.info("record.getAppId()======>>>>"+record.getAppId());
         List<UUserMember> userMembers = userMemberMapper.selectByExample(example);
         UUserMember userMember = new UUserMember();
+        log.info("record======>>>>>>"+record.toString());
+        log.info("userMembers======>>>>>>"+userMembers.toString());
         if(userMembers.size() == 0){
             userMember.setCreateTime(new Date());
             userMember.setUserName(record.getUserName());
@@ -148,6 +151,8 @@ public class MemberService {
             result.setPhone(userMember.getPhone());
             result.setUserType(Constants.USER_TYPE_MEMBER);
             result.setButton(userMember.getButton());
+
+        log.info("result======>>>>>>"+result.toString());
         return ResultBuilder.success(result);
     }
 
@@ -240,7 +245,7 @@ public class MemberService {
         mMemberCarDetailMapper.insertSelective(memberCarDetail);
         return ResultBuilder.success(record);
     }
-    //删除会员购物车
+    //删除会员购物车-------------------------------------------------------
     @Transient
     public BaseCommonResult deleteCar(MemberCarRequest request) {
         log.info("会员购物车删除,请求参数为：{}", request);

@@ -1,5 +1,6 @@
 package spring.goods.controller;
 
+import spring.annotation.LoginRequired;
 import spring.dto.BaseCommonResult;
 import spring.goods.dto.request.GoodsTypeAddRequest;
 import spring.goods.dto.request.GoodsTypeAllListRequest;
@@ -50,6 +51,7 @@ public class GoodsTypeController {
 	
 	@ApiOperation(value = "更新商品分类", httpMethod = "POST")
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@LoginRequired
 	public @ResponseBody BaseCommonResult<Void> update(
 			@RequestBody @Valid GoodsTypeUpdateRequest request) {
 		return goodsTypeService.update(request);
@@ -57,6 +59,7 @@ public class GoodsTypeController {
 	
 	@ApiOperation(value = "新增商品分类", httpMethod = "POST")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@LoginRequired
 	public @ResponseBody BaseCommonResult<Void> add(
 			@RequestBody @Valid GoodsTypeAddRequest request) {
 		return goodsTypeService.add(request);
@@ -64,6 +67,7 @@ public class GoodsTypeController {
 	
 	@ApiOperation(value = "删除商品分类", httpMethod = "DELETE")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+	@LoginRequired
 	public @ResponseBody BaseCommonResult<Void> delete(
 			@RequestParam(name="id") Integer id) {
 		return goodsTypeService.delete(id);

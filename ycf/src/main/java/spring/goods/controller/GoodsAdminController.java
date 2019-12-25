@@ -1,5 +1,6 @@
 package spring.goods.controller;
 
+import spring.annotation.LoginRequired;
 import spring.dto.BaseCommonResult;
 import spring.dto.result.BasePage;
 import spring.goods.dto.request.GoodsListReq;
@@ -48,12 +49,14 @@ public class GoodsAdminController {
      */
     @ApiOperation(value = "添加商品", httpMethod = "POST")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult<PGoods> createGoods(@Validated @RequestBody GoodsListRequest request) {
         return goodsService.createGoods(request);
     }
 
     @ApiOperation(value = "更新商品", httpMethod = "POST")
     @RequestMapping(value = "/update/good", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public @ResponseBody
     BaseCommonResult<PGoods> update( @RequestBody @Valid GoodsListRequest request) {
         return goodsService.update(request);

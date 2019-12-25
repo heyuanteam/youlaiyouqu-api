@@ -13,6 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import spring.annotation.LoginRequired;
 import spring.dto.BaseCommonResult;
+import spring.enums.UserErrorCodeEnum;
 import spring.model.UUserMember;
 import spring.model.UUserMemberExample;
 import spring.service.MemberService;
@@ -57,8 +58,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             // 执行认证
             String token = request.getHeader("token");  // 从 http 请求头中取出 token
             if (token == null) {
-                returnResult.setMsg("信息已失效，请重新登录");
-                returnResult.setCode(11111);
+                returnResult.setMsg(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getMsg());
+                returnResult.setCode(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getCode());
                 //设置状态码
 //                response.setStatus(500);
                 response.setContentType("application/json;charset=UTF-8");
@@ -71,8 +72,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             try {
                 userId = String.valueOf(JWT.decode(token).getAudience().get(0));  // 获取 token 中的 user id
             } catch (JWTDecodeException e) {
-                returnResult.setMsg("信息已失效，请重新登录");
-                returnResult.setCode(11111);
+                returnResult.setMsg(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getMsg());
+                returnResult.setCode(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getCode());
                 //设置状态码
 //                response.setStatus(500);
                 response.setContentType("application/json;charset=UTF-8");
@@ -83,8 +84,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             }
             UUserMember user = memberService.getAppUserMsg(userId);
             if (user == null) {
-                returnResult.setMsg("信息已失效，请重新登录");
-                returnResult.setCode(11111);
+                returnResult.setMsg(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getMsg());
+                returnResult.setCode(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getCode());
                 //设置状态码
 //                response.setStatus(500);
                 response.setContentType("application/json;charset=UTF-8");
@@ -95,12 +96,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             }
             // 验证 token
             try {
-                JWTVerifier verifier =  JWT.require(Algorithm.HMAC256(user.getPassWord())).build();
+                JWTVerifier verifier =  JWT.require(Algorithm.HMAC256(user.getAppId())).build();
                 try {
                     verifier.verify(token);
                 } catch (JWTVerificationException e) {
-                    returnResult.setMsg("信息已失效，请重新登录");
-                    returnResult.setCode(11111);
+                    returnResult.setMsg(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getMsg());
+                    returnResult.setCode(UserErrorCodeEnum.RECHARGE_SCORE_SIGN_ERROR.getCode());
                     //设置状态码
 //                    response.setStatus(500);
                     response.setContentType("application/json;charset=UTF-8");

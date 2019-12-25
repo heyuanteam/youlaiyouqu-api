@@ -1,5 +1,6 @@
 package spring.goods.controller;
 
+import spring.annotation.LoginRequired;
 import spring.dto.BaseCommonResult;
 import spring.goods.dto.request.*;
 import spring.goods.dto.response.TypeAttrAllListResponse;
@@ -54,6 +55,7 @@ public class TypeAttrController {
 	
 	@ApiOperation(value = "更新商品attr", httpMethod = "POST")
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@LoginRequired
 	public @ResponseBody BaseCommonResult<Void> update(
 			@RequestBody @Valid TypeAttrUpdateRequest request) {
 		return typeAttrService.update(request);
@@ -61,6 +63,7 @@ public class TypeAttrController {
 	
 	@ApiOperation(value = "新增商品attr", httpMethod = "POST")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@LoginRequired
 	public @ResponseBody BaseCommonResult<Void> add(
 			@RequestBody @Valid TypeAttrAddRequest request) {
 		return typeAttrService.add(request);
@@ -68,6 +71,7 @@ public class TypeAttrController {
 	
 	@ApiOperation(value = "删除商品attr", httpMethod = "DELETE")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+	@LoginRequired
 	public @ResponseBody BaseCommonResult<Void> delete(
 			@RequestParam("id") Integer id) {
 		return typeAttrService.delete(id);

@@ -10,7 +10,9 @@ public enum UserErrorCodeEnum {
     RECHARGE_SCORE_FINISH(10002,"本次充值已完成"),
     RECHARGE_SCORE_PARAMS_FAIL(10003,"必填参数不能为空"),
     RECHARGE_SCORE_SIGN_FAIL(10004,"签名失败"),
-    
+
+    RECHARGE_SCORE_SIGN_ERROR(11111,"信息已失效，请重新登录"),
+
 
     FAIL(99999,"系统繁忙，请稍后重试"),
     PARAMS_FAIL(99998,"参数注入不符合要求"),// 请求类中的值不能为空

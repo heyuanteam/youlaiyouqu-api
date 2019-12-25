@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import spring.annotation.LoginRequired;
 import spring.config.alioss.AliHttpUtils;
 import spring.dto.BaseCommonResult;
 import spring.utils.ResultBuilder;
@@ -31,6 +32,7 @@ public class ExpressController {
      */
     @ApiOperation(value = "物流查询", httpMethod = "GET")
     @RequestMapping(value = "/expre/{expressNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult getExpress(@ApiParam("物流单号") @PathVariable String expressNo) {
         String host = "https://wuliu.market.alicloudapi.com";
         String path = "/kdi";

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import spring.annotation.LoginRequired;
 import spring.dto.BaseCommonResult;
 import spring.dto.request.RecoveryOrderRequest;
 import spring.dto.result.BasePage;
@@ -35,6 +36,7 @@ public class TradeMemberComtroller {
      */
     @ApiOperation(value = "查询会员订单", httpMethod = "POST")
     @RequestMapping(value = "/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult<BasePage<POrdersListResult>> getMemberOrder(@Validated @RequestBody MemberOrderReq request) {
         return pOrderService.getMemberOrder(request);
     }
@@ -53,17 +55,20 @@ public class TradeMemberComtroller {
 
     @ApiOperation(value = "取消订单", httpMethod = "GET")
     @RequestMapping(value = "/delete/order/{orderNo}/{type}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult deleteOrder(@PathVariable Long orderNo,@ApiParam("取消订单原因:0:我不想买了,1信息填写错误,2重新下单,3其他原因") @PathVariable Integer type) {
         return pOrderService.deleteOrder(orderNo,type);
     }
 
     @ApiOperation(value = "订单详情", httpMethod = "GET")
     @RequestMapping(value = "/order/{orderNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult getOrderDetails(@PathVariable Long orderNo) {
         return pOrderService.getOrderDetails(orderNo);
     }
     @ApiOperation(value = "会员订单确认收货", httpMethod = "GET")
     @RequestMapping(value = "/order/confirm/{orderNo}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult confirmOrderDetails(@PathVariable Long orderNo) {
         return pOrderService.confirmOrderDetails(orderNo);
     }
@@ -71,6 +76,7 @@ public class TradeMemberComtroller {
 
     @ApiOperation(value = "退货", httpMethod = "POST")
     @RequestMapping(value = "/refund/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult<POrders> refundOrder(@Validated @RequestBody RefundOrderReequest request) {
         return pOrderService.refundOrder(request);
     }
@@ -84,6 +90,7 @@ public class TradeMemberComtroller {
      */
     @ApiOperation(value = "会员回收", httpMethod = "POST")
     @RequestMapping(value = "/recovery/order", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult<MRecoveryGoods> recoveryOrder(@Validated @RequestBody RecoveryOrderRequest request) {
         return pOrderService.recoveryOrder(request);
     }
@@ -96,24 +103,28 @@ public class TradeMemberComtroller {
      */
     @ApiOperation(value = "会员回收列表", httpMethod = "POST")
     @RequestMapping(value = "/recovery/orderList", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult<BasePage<MRecoveryGoods>> recoveryOrderList(@Validated @RequestBody RecoveryRequest request) {
         return pOrderService.recoveryOrderList(request);
     }
 
     @ApiOperation(value = "回收订单详情", httpMethod = "GET")
     @RequestMapping(value = "/recovery/order/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult<MRecoveryGoods> getRecoveryOrder(@PathVariable Long id) {
         return pOrderService.getRecoveryOrder(id);
     }
 
     @ApiOperation(value = "用户确认回收订单", httpMethod = "GET")
     @RequestMapping(value = "/recovery/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult getRecoveryOrderState(@PathVariable Long id) {
         return pOrderService.getRecoveryOrderState(id);
     }
 
     @ApiOperation(value = "上门验收", httpMethod = "GET")
     @RequestMapping(value = "/recovery/check/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @LoginRequired
     public BaseCommonResult getRecoveryState(@PathVariable Long id) {
         return pOrderService.getRecoveryState(id);
     }
